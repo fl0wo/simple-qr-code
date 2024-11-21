@@ -1,44 +1,88 @@
 import "tailwindcss/tailwind.css"
 import Head from "next/head"
 import {Footer} from "@/src/ui/Footer";
+import {useState} from "react";
+import QRCode from "react-qr-code";
 
 export default function Home() {
+
+    const [qrCodeText, setQrCodeText] = useState("");
+    const [qrCodeValue, setQrCodeValue] = useState<string|undefined>();
+
+    const genQrCodeButtonClicked = () => {
+        console.log("Generate QR code button clicked");
+        setQrCodeValue(qrCodeText);
+    }
+
   return (
       <div className="container">
           <Head>
-              <title>Home QR</title>
+              <title>Gen QR</title>
           </Head>
 
           <main>
               <h1 className="title">
-                  Welcome to <a href="#">Simple QR!</a>
+                  Gen a <a href="">QR.</a>
               </h1>
 
-              {/*<p className="description">*/}
-              {/*  Get started by editing <code>pages/index.js</code>*/}
-              {/*</p>*/}
+              <div style={{display: "flex", flexDirection: "column"}}>
+                  <div style={{display: "flex", flexDirection: "row", marginTop: "2rem"}}>
+                      {/*<p className="content">*/}
+                      <input
+                          value={qrCodeText}
+                          onChange={(e) => setQrCodeText(e.target.value)}
+                          type="text"
+                          size={25}
+                          height={100}
+                          style={{fontSize: 50}}
+                          className="border-2 border-gray-300 p-2"
+                          placeholder="Enter Name"
+                      />
 
-              <div className="grid">
-                  <a href="/gen" className="card">
-                      <h3>Generate &rarr;</h3>
-                      <p>
-                          Generate a QR code with the text you want!
-                      </p>
-                  </a>
+                      <button
+                          className="button"
+                          onClick={genQrCodeButtonClicked}>
+                          Generate
+                      </button>
+                  </div>
 
-                  <a href="/scan" className="card">
-                      <h3>Scann &rarr;</h3>
-                      <p>
-                          Scann & Invalidate a QR code with your camera!
-                      </p>
-                  </a>
+                  {
+                      qrCodeValue &&
+                      <div style={{height: "auto", margin: "0 auto", width: "50%", marginTop: "2rem"}}>
+                          <QRCode
+                              size={256}
+                              style={{height: "auto", maxWidth: "100%", width: "100%"}}
+                              value={qrCodeValue}
+                              viewBox={`0 0 256 256`}
+                          />
+                      </div>
+                  }
               </div>
+
           </main>
 
           <Footer/>
 
-
           <style jsx>{`
+
+              .button {
+                  background-color: #ff69b4; /* Cute pink background */
+                  color: white; /* White text */
+                  font-size: 24px; /* Larger font size */
+                  font-weight: bold; /* Bold text */
+                  padding: 16px 32px; /* Bigger padding for a larger button */
+                  border: none; /* Remove border */
+                  border-radius: 12px; /* Rounded corners */
+                  cursor: pointer; /* Change cursor to pointer */
+                  transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effects */
+              }
+
+              .button:active {
+                  transform: scale(0.95); /* Slightly smaller when clicked */
+                  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Dim shadow when clicked */
+              }
+              
+              
               .container {
                   min-height: 100vh;
                   padding: 0 0.5rem;
@@ -168,6 +212,7 @@ export default function Home() {
                   }
               }
           `}</style>
+
           <style jsx global>{`
               html,
               body {

@@ -51,6 +51,10 @@
       "type": "runtime"
     },
     {
+      "name": "react-qr-code",
+      "type": "runtime"
+    },
+    {
       "name": "tailwindcss",
       "type": "runtime"
     }

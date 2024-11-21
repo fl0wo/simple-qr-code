@@ -37,7 +37,7 @@ jspm_packages/
 !/test/
 !/tsconfig.json
 !/tsconfig.dev.json
-!/pages/
+!/src/
 /lib
 /dist/
 !/tailwind.config.json
